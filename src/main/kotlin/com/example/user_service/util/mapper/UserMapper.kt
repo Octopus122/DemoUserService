@@ -3,6 +3,7 @@ package com.example.user_service.util.mapper
 import com.example.user_service.database.entity.User
 import com.example.user_service.model.request.UserRequestRegister
 import com.example.user_service.model.request.UserUpdateRequest
+import com.example.user_service.model.response.UserRegistrationResponse
 import com.example.user_service.model.response.UserResponse
 import com.example.user_service.util.hasher.HashService
 import org.springframework.stereotype.Component
@@ -28,4 +29,12 @@ class UserMapper (
         login = request.login
         bio = request.bio
     }
+    fun registerEntityToResponse(entity: User, sendConfirmation: Boolean): UserRegistrationResponse = UserRegistrationResponse(
+        entity.id,
+        entity.login,
+        entity.email,
+        entity.isConfirmed,
+        entity.bio,
+        sendConfirmation
+    )
 }

@@ -2,6 +2,7 @@ package com.example.user_service.controller
 
 import com.example.user_service.model.request.UserLogin
 import com.example.user_service.model.request.UserRequestRegister
+import com.example.user_service.model.response.UserRegistrationResponse
 import com.example.user_service.model.response.UserResponse
 import com.example.user_service.service.UserService
 import org.springframework.web.bind.annotation.*
@@ -13,7 +14,7 @@ class UserController(
 ) {
 
     @PostMapping("/register")
-    fun register(@RequestBody request: UserRequestRegister): UserResponse{
+    fun register(@RequestBody request: UserRequestRegister): UserRegistrationResponse {
         return service.register(request)
     }
 

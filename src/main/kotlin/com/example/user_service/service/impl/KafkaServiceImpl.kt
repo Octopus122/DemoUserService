@@ -17,6 +17,9 @@ class KafkaServiceImpl(
     private val topic: String = ""
 
     override fun sendMessage(message: KafkaMessageDto) {
-        kafkaTemplate.send(topic, "1", message)
+        val kafkaTask = kafkaTemplate.send(topic, "1", message)
+        if (kafkaTask.isDone) println("Is done")
+        if (kafkaTask.isCompletedExceptionally) println("CompletedExceptionaly")
+        if (kafkaTask.isCancelled) println("Cancelled")
     }
 }

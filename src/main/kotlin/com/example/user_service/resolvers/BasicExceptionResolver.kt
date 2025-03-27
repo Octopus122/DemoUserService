@@ -1,6 +1,8 @@
 package com.example.user_service.resolvers
 
 import com.example.user_service.dto.ErrorMessageDto
+import com.example.user_service.dto.ErrorMessageWithUserDto
+import com.example.user_service.exception.CantSendConfirmMessageException
 import com.example.user_service.exception.EmailAlreadyConfirmedException
 import com.example.user_service.exception.WrongLoginDataException
 import com.example.user_service.exception.NotFoundException
@@ -25,14 +27,6 @@ class BasicExceptionResolver {
         return ResponseEntity<ErrorMessageDto>(
             ErrorMessageDto(exception.message),
             HttpStatus.NOT_FOUND
-        )
-    }
-
-    @ExceptionHandler(EmailAlreadyConfirmedException::class)
-    fun alreadyConfirmedHandler(exception: EmailAlreadyConfirmedException):ResponseEntity<ErrorMessageDto>{
-        return ResponseEntity<ErrorMessageDto>(
-            ErrorMessageDto(exception.message),
-            HttpStatus.METHOD_NOT_ALLOWED
         )
     }
 }
