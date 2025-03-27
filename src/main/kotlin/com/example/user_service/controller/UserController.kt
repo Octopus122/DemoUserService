@@ -2,9 +2,11 @@ package com.example.user_service.controller
 
 import com.example.user_service.model.request.UserLogin
 import com.example.user_service.model.request.UserRequestRegister
+import com.example.user_service.model.response.SendConfirmationResponse
 import com.example.user_service.model.response.UserRegistrationResponse
 import com.example.user_service.model.response.UserResponse
 import com.example.user_service.service.UserService
+import org.springframework.security.authorization.method.AuthorizeReturnObject
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -27,4 +29,6 @@ class UserController(
     fun confirmEmail(@PathVariable message:String ):String{
         return service.confirmEmail(message)
     }
+    @GetMapping("/confirm/send")
+    fun sendConfirmationEmail(@RequestBody request: UserLogin): SendConfirmationResponse = service.sendConfirmation(request)
 }

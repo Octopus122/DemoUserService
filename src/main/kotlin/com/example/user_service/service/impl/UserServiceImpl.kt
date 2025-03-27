@@ -8,6 +8,7 @@ import com.example.user_service.exception.NotFoundException
 import com.example.user_service.exception.WrongLoginDataException
 import com.example.user_service.model.request.UserLogin
 import com.example.user_service.model.request.UserRequestRegister
+import com.example.user_service.model.response.SendConfirmationResponse
 import com.example.user_service.model.response.UserRegistrationResponse
 import com.example.user_service.model.response.UserResponse
 import com.example.user_service.service.KafkaService
@@ -59,6 +60,27 @@ class UserServiceImpl (
         val entity = dao.findByLogin(request.login) ?: throw NotFoundException("Нет пользователя с таким логином")
         if (entity.password != hash.getHash(request.password)) throw WrongLoginDataException("Неверный пароль")
         return mapper.entityToResponse(entity)
+    }
+
+    override fun sendConfirmation(request: UserLogin): SendConfirmationResponse {
+        val entity = dao.findByLogin(request.login) ?: throw NotFoundException("Нет пользователя с таким логином")
+        if (entity.password != hash.getHash(request.password)) throw WrongLoginDataException("Неверный пароль")
+        try{
+            mailService.sendMessage(
+                KafkaMessageDto(
+                    entity.email,
+                    hash.getUserHash(UserLogin(request.login, request.password))
+                )
+            )
+        }
+        catch (e: Exception){
+            return SendConfirmationResponse(
+                "Ошибка при отправке письма",
+                false)
+        }
+        return SendConfirmationResponse(
+            "Письмо отправлено на почту",
+            true)
     }
 
 }
