@@ -29,4 +29,11 @@ class BasicExceptionResolver {
             HttpStatus.NOT_FOUND
         )
     }
+    @ExceptionHandler(Exception::class)
+    fun unknownException(exception: Exception): ResponseEntity<ErrorMessageDto>{
+        return ResponseEntity<ErrorMessageDto>(
+            ErrorMessageDto("Что-то пошла не так"),
+            HttpStatus.INTERNAL_SERVER_ERROR
+        )
+    }
 }
