@@ -28,7 +28,7 @@ spring:
         spring.json.add.type.headers: false
         delivery:
           timeout:
-            ms: 10000
+            ms: 30000
 
 
 
