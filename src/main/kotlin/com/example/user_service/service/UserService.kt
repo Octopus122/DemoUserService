@@ -12,4 +12,5 @@ interface UserService{
     fun confirmEmail(message: String): String
     fun login(request: UserLogin): UserResponse
     fun sendConfirmation(request: UserLogin): SendConfirmationResponse
+    fun deleteById(id: Long): String
 }

@@ -83,4 +83,10 @@ class UserServiceImpl (
             true)
     }
 
+    override fun deleteById(id: Long): String {
+        val entity = dao.findById(id).orElseThrow({ NotFoundException("Невозможно найти пользователя") })
+        dao.delete(entity)
+        return "Пользователь успешно удален"
+    }
+
 }
